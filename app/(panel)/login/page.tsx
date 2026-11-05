@@ -3,6 +3,7 @@
 import { Suspense, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import "@/styles/login-fx.css";
 
 function LoginForm() {
   const params = useSearchParams();
@@ -34,9 +35,11 @@ function LoginForm() {
   }
 
   return (
-    <div className="a-auth">
-      <form className="a-auth-card" onSubmit={submit}>
-        <img src="/logo.png" alt="EasyReaple" />
+    <div className="a-auth fx-login">
+      <div className="fx-orb fx-orb-blue" aria-hidden="true" />
+      <div className="fx-orb fx-orb-sky" aria-hidden="true" />
+      <form className="a-auth-card fx-card" onSubmit={submit}>
+        <img className="fx-logo" src="/logo.png" alt="EasyReaple" />
         <h1>Panel de administración</h1>
         <p className="a-sub">Ingresa para administrar el sitio.</p>
 

@@ -1,0 +1,118 @@
+/* ==========================================================================
+   Animación futurista SOLO para la pantalla de inicio de sesión (/login).
+   Se importa únicamente desde app/(panel)/login/page.tsx; las demás pantallas
+   del panel (olvidé mi clave, restablecer) y el sitio público no la usan.
+   Basada en animaciones-futuristas (NOVA STUDIO), con los colores de EasyReaple.
+   ========================================================================== */
+
+.fx-login {
+    --fx-blue: 10, 132, 255;     /* azul del logo */
+    --fx-sky: 56, 189, 248;      /* celeste de apoyo */
+}
+
+@keyframes fx-rise-in {
+    from { opacity: 0; transform: translateY(14px) scale(.985); }
+    to   { opacity: 1; transform: none; }
+}
+@keyframes fx-float {
+    0%, 100% { transform: translate3d(0, 0, 0); }
+    50%      { transform: translate3d(0, -10px, 0); }
+}
+@keyframes fx-drift-a {
+    0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+    50%      { transform: translate3d(8vw, 6vh, 0) scale(1.15); }
+}
+@keyframes fx-drift-b {
+    0%, 100% { transform: translate3d(0, 0, 0) scale(1.1); }
+    50%      { transform: translate3d(-9vw, -7vh, 0) scale(.95); }
+}
+@keyframes fx-grid-move {
+    from { background-position: 0 0, 0 0; }
+    to   { background-position: 0 56px, 56px 0; }
+}
+@keyframes fx-logo-glow {
+    0%, 100% { filter: drop-shadow(0 0 8px rgba(var(--fx-blue), .35)); }
+    50%      { filter: drop-shadow(0 0 18px rgba(var(--fx-sky), .55)); }
+}
+@keyframes fx-border-sweep {
+    from { background-position: 0% 50%; }
+    to   { background-position: 200% 50%; }
+}
+@keyframes fx-scan {
+    0%       { transform: translateY(-20vh); opacity: 0; }
+    10%, 90% { opacity: .5; }
+    100%     { transform: translateY(120vh); opacity: 0; }
+}
+
+/* Fondo: degradados + cuadrícula en movimiento + línea de escaneo */
+.a-auth.fx-login {
+    position: relative;
+    overflow: hidden;
+    background:
+        radial-gradient(ellipse at 20% 10%, rgba(var(--fx-blue), .28), transparent 55%),
+        radial-gradient(ellipse at 85% 90%, rgba(var(--fx-sky), .2), transparent 55%),
+        #050d1a;
+}
+.fx-login::before {
+    content: "";
+    position: absolute;
+    inset: -56px 0 0 -56px;
+    background-image:
+        linear-gradient(rgba(var(--fx-blue), .14) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(var(--fx-sky), .12) 1px, transparent 1px);
+    background-size: 56px 56px;
+    -webkit-mask-image: radial-gradient(ellipse at center, #000 25%, transparent 75%);
+            mask-image: radial-gradient(ellipse at center, #000 25%, transparent 75%);
+    animation: fx-grid-move 6s linear infinite;
+    pointer-events: none;
+}
+.fx-login::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; top: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(var(--fx-sky), .9), transparent);
+    filter: blur(1px);
+    animation: fx-scan 7s ease-in-out infinite;
+    pointer-events: none;
+}
+
+/* Luces difusas que flotan */
+.fx-orb { position: absolute; border-radius: 9999px; filter: blur(70px); pointer-events: none; }
+.fx-orb-blue { width: 320px; height: 320px; left: -80px; top: 40px; background: rgba(var(--fx-blue), .45); animation: fx-drift-a 16s ease-in-out infinite; }
+.fx-orb-sky  { width: 380px; height: 380px; right: -96px; bottom: 0; background: rgba(var(--fx-sky), .32); animation: fx-drift-b 19s ease-in-out infinite; }
+
+/* Recuadro: entra suave y tiene un borde luminoso MUY discreto
+   (menos intensidad que la versión de Stockia) y fondo no tan blanco. */
+.a-auth-card.fx-card {
+    position: relative;
+    z-index: 10;
+    isolation: isolate;
+    background: #eef2f8;
+    box-shadow: 0 18px 44px rgba(0, 0, 0, .35);
+    animation: fx-rise-in .65s cubic-bezier(.22, 1, .36, 1) both;
+}
+.a-auth-card.fx-card::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    z-index: -1;
+    border-radius: inherit;
+    background: linear-gradient(90deg, rgb(var(--fx-sky)), rgb(var(--fx-blue)), rgb(var(--fx-sky)), rgb(var(--fx-blue)));
+    background-size: 200% 100%;
+    opacity: .4;
+    animation: fx-border-sweep 6s linear infinite;
+}
+
+/* Logo que flota y brilla suavemente */
+.a-auth-card img.fx-logo {
+    animation: fx-float 6s ease-in-out infinite, fx-logo-glow 4s ease-in-out infinite;
+}
+
+/* Respeta "reducir movimiento" del dispositivo */
+@media (prefers-reduced-motion: reduce) {
+    .fx-login::before, .fx-login::after, .fx-orb-blue, .fx-orb-sky,
+    .a-auth-card.fx-card, .a-auth-card.fx-card::before, .a-auth-card img.fx-logo {
+        animation: none !important;
+    }
+}
