@@ -1,0 +1,183 @@
+/*==========================================================
+    VARIABLES GLOBALES DEL PROYECTO
+    EasyReaple
+==========================================================*/
+
+/*==========================================================
+    COLORES PRINCIPALES
+==========================================================*/
+
+:root {
+
+    /* Color principal (Azul del logo) */
+    --color-primary: #0A84FF;
+
+    /* Azul oscuro del fondo */
+    --color-secondary: #081426;
+
+    /* Azul aún más oscuro para secciones */
+    --color-dark: #050D1A;
+
+    /* Dorado del logo */
+    --color-accent: #F4C542;
+
+    /* Blanco */
+    --color-white: #FFFFFF;
+
+    /* Negro */
+    --color-black: #000000;
+
+    /* Gris muy claro */
+    --color-light: #F5F7FA;
+
+    /* Gris */
+    --color-gray: #9AA4B2;
+
+    /* Gris oscuro */
+    --color-gray-dark: #4A5568;
+
+    /* Verde éxito */
+    --color-success: #16A34A;
+
+    /* Amarillo advertencia */
+    --color-warning: #F59E0B;
+
+    /* Rojo */
+    --color-danger: #DC2626;
+
+    /* Fondo principal */
+    --background-color: #081426;
+
+    /* Fondo secundario */
+    --background-secondary: #0E1E35;
+
+}
+
+
+/*==========================================================
+    TIPOGRAFÍAS
+==========================================================*/
+
+:root {
+
+    --font-primary: "Poppins", sans-serif;
+
+}
+
+
+/*==========================================================
+    TAMAÑOS DE LETRA
+==========================================================*/
+
+:root {
+
+    --font-xs: .75rem;
+    --font-sm: .875rem;
+    --font-md: 1rem;
+    --font-lg: 1.25rem;
+    --font-xl: 1.5rem;
+    --font-2xl: 2rem;
+    --font-3xl: 2.8rem;
+    --font-4xl: 3.5rem;
+
+}
+
+
+/*==========================================================
+    GROSOR DE LETRAS
+==========================================================*/
+
+:root {
+
+    --weight-light: 300;
+    --weight-normal: 400;
+    --weight-medium: 500;
+    --weight-semibold: 600;
+    --weight-bold: 700;
+    --weight-extrabold: 800;
+
+}
+
+
+/*==========================================================
+    ESPACIADOS
+==========================================================*/
+
+:root {
+
+    --space-xs: .25rem;
+    --space-sm: .5rem;
+    --space-md: 1rem;
+    --space-lg: 1.5rem;
+    --space-xl: 2rem;
+    --space-2xl: 3rem;
+    --space-3xl: 5rem;
+
+}
+
+
+/*==========================================================
+    BORDES REDONDEADOS
+==========================================================*/
+
+:root {
+
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+    --radius-circle: 50%;
+
+}
+
+
+/*==========================================================
+    SOMBRAS
+==========================================================*/
+
+:root {
+
+    --shadow-sm: 0 2px 8px rgba(0,0,0,.15);
+
+    --shadow-md: 0 8px 20px rgba(0,0,0,.25);
+
+    --shadow-lg: 0 20px 40px rgba(0,0,0,.35);
+
+}
+
+
+/*==========================================================
+    TRANSICIONES
+==========================================================*/
+
+:root {
+
+    --transition-fast: .2s ease;
+
+    --transition-normal: .35s ease;
+
+    --transition-slow: .6s ease;
+
+}
+
+
+/*==========================================================
+    CONTENEDOR PRINCIPAL
+==========================================================*/
+
+:root {
+
+    --container-width: 1280px;
+
+}
+
+
+/*==========================================================
+    ALTURA DEL HEADER
+==========================================================*/
+
+:root {
+
+    --header-height: 90px;
+
+}

@@ -1,0 +1,727 @@
+/*==========================================================
+    HEADER.CSS
+    ==========================================================
+
+    Este archivo controla toda la apariencia del encabezado.
+
+    Contiene:
+
+    1. Header principal.
+    2. Contenedor.
+    3. Logo.
+    4. Menú.
+    5. Buscador.
+    6. Botón WhatsApp.
+    7. Menú móvil.
+    8. Responsive.
+
+==========================================================*/
+
+
+/*==========================================================
+    HEADER PRINCIPAL
+
+    Este bloque define el encabezado que permanece fijo
+    en la parte superior del sitio.
+
+==========================================================*/
+
+.header{
+
+    position: fixed;
+
+    top: 0;
+
+    left: 0;
+
+    width: 100%;
+
+    height: 85px;
+
+    display: flex;
+
+    align-items: center;
+
+    z-index: 9999;
+
+    background: rgba(5,13,26,.95);
+
+    backdrop-filter: blur(14px);
+
+    -webkit-backdrop-filter: blur(14px);
+
+    border-bottom: 1px solid rgba(255,255,255,.08);
+
+}
+
+
+/*==========================================================
+    HEADER CUANDO EL USUARIO HACE SCROLL
+
+    Se agrega la clase "scrolled" desde JavaScript.
+
+==========================================================*/
+
+.header.scrolled{
+
+    background:rgba(2,8,18,.97);
+
+    box-shadow:0 15px 40px rgba(0,0,0,.45);
+
+}
+
+
+/*==========================================================
+    CONTENEDOR PRINCIPAL
+
+    Organiza todos los elementos del Header.
+
+==========================================================*/
+
+.header-container{
+
+    display:grid;
+
+    grid-template-columns:
+
+        170px
+
+        1fr
+
+        260px
+
+        180px;
+
+    align-items:center;
+
+    gap:25px;
+
+}
+
+
+/*==========================================================
+    LOGO
+
+==========================================================*/
+
+.logo{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    height:100%;
+
+    /* position+z-index para quedar siempre encima del panel
+       del menú móvil (que también vive dentro del header). */
+    position:relative;
+    z-index:2;
+
+}
+
+
+.logo img{
+
+    width:70px;
+
+    transition:.35s ease;
+
+}
+
+
+.logo:hover img{
+
+    transform:scale(1.04);
+
+}
+
+
+/*==========================================================
+    MENÚ DE NAVEGACIÓN
+
+==========================================================*/
+
+.navbar{
+
+    display:flex;
+
+    justify-content:center;
+
+}
+
+
+.nav-menu{
+
+    display:flex;
+
+    gap:35px;
+
+    align-items:center;
+
+}
+
+
+.nav-menu li{
+
+    list-style:none;
+
+}
+
+
+/*==========================================================
+    ENLACES DEL MENÚ
+
+==========================================================*/
+
+.nav-menu a{
+
+    position:relative;
+
+    color:var(--color-white);
+
+    font-weight:500;
+
+    transition:.3s;
+
+}
+
+
+.nav-menu a:hover{
+
+    color:var(--color-primary);
+
+}
+
+
+.nav-menu a::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+
+    bottom:-8px;
+
+    width:0;
+
+    height:2px;
+
+    background:var(--color-primary);
+
+    transition:.3s;
+
+}
+
+
+.nav-menu a:hover::after{
+
+    width:100%;
+
+}
+/*==========================================================
+    BUSCADOR
+
+    En esta sección se configura el buscador que permitirá
+    encontrar productos, servicios y repuestos.
+
+==========================================================*/
+
+.search-box{
+
+    display:flex;
+
+    align-items:center;
+
+    height:48px;
+
+    background:rgba(255,255,255,.06);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    border-radius:50px;
+
+    overflow:hidden;
+
+    transition:.35s ease;
+
+}
+
+
+.search-box:hover{
+
+    border-color:var(--color-primary);
+
+    box-shadow:0 0 20px rgba(10,132,255,.15);
+
+}
+
+
+.search-box input{
+
+    flex:1;
+
+    height:100%;
+
+    background:transparent;
+
+    border:none;
+
+    outline:none;
+
+    padding:0 18px;
+
+    color:var(--color-white);
+
+    font-size:.95rem;
+
+}
+
+
+.search-box input::placeholder{
+
+    color:rgba(255,255,255,.55);
+
+}
+
+
+.search-box button{
+
+    width:50px;
+
+    height:48px;
+
+    background:transparent;
+
+    color:var(--color-white);
+
+    transition:.35s;
+
+}
+
+
+.search-box button:hover{
+
+    background:var(--color-primary);
+
+}
+
+
+/*==========================================================
+    BOTÓN DE WHATSAPP
+
+    Este botón será el llamado principal a la acción
+    (CTA) de todo el sitio.
+
+==========================================================*/
+
+.header .btn-primary{
+
+    width:100%;
+
+    justify-content:center;
+
+    font-size:.95rem;
+
+    padding:14px 20px;
+
+}
+
+
+.header .btn-primary i{
+
+    font-size:1.1rem;
+
+}
+
+
+/*==========================================================
+    BOTÓN MENÚ MÓVIL
+
+    Solo aparecerá en dispositivos móviles.
+
+==========================================================*/
+
+.menu-toggle{
+
+    display:none;
+
+    justify-content:center;
+
+    align-items:center;
+
+    width:50px;
+
+    height:50px;
+
+    border-radius:10px;
+
+    background:transparent;
+
+    color:var(--color-white);
+
+    font-size:1.4rem;
+
+    transition:.35s ease;
+
+    /* Debe quedar encima del panel del menú móvil para
+       poder seguir usándose como botón de cerrar (X). */
+    position:relative;
+    z-index:2;
+
+}
+
+
+.menu-toggle:hover{
+
+    background:rgba(255,255,255,.08);
+
+}
+
+
+/*==========================================================
+    BOTÓN DE BÚSQUEDA MÓVIL Y SU PANEL DESPLEGABLE
+
+    Independiente del menú lateral: así se puede ver el
+    catálogo filtrándose en vivo mientras se escribe.
+
+==========================================================*/
+
+.search-toggle{
+
+    display:none;
+
+    justify-content:center;
+
+    align-items:center;
+
+    width:46px;
+
+    height:46px;
+
+    border-radius:10px;
+
+    background:transparent;
+
+    color:var(--color-white);
+
+    font-size:1.2rem;
+
+    transition:.35s ease;
+
+    position:relative;
+    z-index:2;
+
+}
+
+
+.search-toggle:hover,
+.search-toggle.active{
+
+    background:rgba(255,255,255,.08);
+    color:var(--color-primary);
+
+}
+
+
+.mobile-search-bar{
+
+    display:none;
+
+}
+
+
+/*==========================================================
+    EFECTOS GENERALES
+
+==========================================================*/
+
+.logo,
+.nav-menu a,
+.search-box,
+.btn-primary,
+.menu-toggle{
+
+    transition:.35s ease;
+
+}
+
+
+/*==========================================================
+    LÍNEA DECORATIVA
+
+==========================================================*/
+
+.header::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+
+    bottom:0;
+
+    width:100%;
+
+    height:1px;
+
+    background:linear-gradient(
+        90deg,
+        transparent,
+        rgba(10,132,255,.35),
+        transparent
+    );
+
+}
+
+/*==========================================================
+    DISEÑO RESPONSIVE
+
+    En esta sección se adapta el Header para tablets
+    y teléfonos móviles.
+
+==========================================================*/
+
+
+/*==========================================================
+    TABLETS
+==========================================================*/
+
+@media (max-width:1200px){
+
+    .header-container{
+
+        grid-template-columns:
+
+            160px
+
+            1fr
+
+            50px;
+
+    }
+
+    /*------------------------------------------------------
+        Se oculta el buscador para ganar espacio.
+    ------------------------------------------------------*/
+
+    .search-box{
+
+        display:none;
+
+    }
+
+}
+
+
+/*==========================================================
+    MÓVILES
+==========================================================*/
+
+@media (max-width:992px){
+
+    .header{
+
+        height:80px;
+
+    }
+
+    .header-container{
+
+        display:flex;
+
+        align-items:center;
+
+        gap:8px;
+
+    }
+
+    /*------------------------------------------------------
+        Menú lateral móvil.
+        Se muestra al agregar la clase "active" desde menu.js.
+    ------------------------------------------------------*/
+
+    .navbar{
+
+        position:fixed;
+        top:0;
+        right:0;
+        width:min(320px, 85%);
+        height:100vh;
+        display:flex;
+        flex-direction:column;
+        align-items:flex-start;
+        justify-content:center;
+        padding:40px;
+        background:rgba(5,13,26,.98);
+        backdrop-filter:blur(14px);
+        -webkit-backdrop-filter:blur(14px);
+        border-left:1px solid rgba(255,255,255,.08);
+        transform:translateX(100%);
+        transition:transform .4s ease;
+        /* Bajo (no 9998): el logo y el botón hamburguesa, dentro
+           del mismo header, tienen z-index:2 para quedar siempre
+           por encima de este panel. El header ya se encarga de
+           quedar por encima del fondo oscuro (.menu-overlay). */
+        z-index:1;
+
+    }
+
+    .navbar.active{
+
+        transform:translateX(0);
+
+    }
+
+    /*------------------------------------------------------
+        Botón y panel de búsqueda móvil.
+        margin-left:auto empuja este botón (y el de menú, que
+        le sigue) hacia la derecha, dejando el logo a la
+        izquierda.
+    ------------------------------------------------------*/
+
+    .search-toggle{
+
+        display:flex;
+        margin-left:auto;
+
+    }
+
+    .mobile-search-bar{
+
+        display:block;
+        position:fixed;
+        top:80px;
+        left:0;
+        width:100%;
+        padding:16px 20px;
+        background:rgba(5,13,26,.98);
+        backdrop-filter:blur(14px);
+        -webkit-backdrop-filter:blur(14px);
+        border-bottom:1px solid rgba(255,255,255,.08);
+        transform:translateY(-20px);
+        opacity:0;
+        visibility:hidden;
+        transition:transform .3s ease, opacity .3s ease, visibility .3s;
+        z-index:9996;
+
+    }
+
+    .mobile-search-bar.active{
+
+        transform:translateY(0);
+        opacity:1;
+        visibility:visible;
+
+    }
+
+    /* Selector con mayor especificidad que ".search-box{display:none}"
+       (regla que oculta el buscador de escritorio en pantallas
+       medianas), para que este sí se muestre aquí dentro. */
+    #mobileSearchBar .search-box{
+
+        display:flex;
+        width:100%;
+
+    }
+
+    .nav-menu{
+
+        flex-direction:column;
+        align-items:flex-start;
+        gap:28px;
+
+    }
+
+    .nav-menu a{
+
+        font-size:1.15rem;
+
+    }
+
+    /*------------------------------------------------------
+        Fondo oscuro detrás del menú lateral.
+    ------------------------------------------------------*/
+
+    .menu-overlay{
+
+        position:fixed;
+        inset:0;
+        background:rgba(0,0,0,.6);
+        opacity:0;
+        visibility:hidden;
+        transition:var(--transition-normal);
+        z-index:9997;
+
+    }
+
+    .menu-overlay.active{
+
+        opacity:1;
+        visibility:visible;
+
+    }
+
+    /*------------------------------------------------------
+        El botón de WhatsApp también se oculta porque habrá
+        un botón flotante en toda la página.
+    ------------------------------------------------------*/
+
+    .header .btn-primary{
+
+        display:none;
+
+    }
+
+    /*------------------------------------------------------
+        Se muestra el botón hamburguesa.
+    ------------------------------------------------------*/
+
+    .menu-toggle{
+
+        display:flex;
+
+    }
+
+    /* El logo es cuadrado (885x885): se limita la ALTURA, no
+       el ancho, para que siempre quepa dentro de la barra del
+       header sin desbordarse ni verse desproporcionado. */
+    .logo img{
+
+        width:auto;
+        height:54px;
+
+    }
+
+}
+
+
+/*==========================================================
+    CELULARES PEQUEÑOS
+==========================================================*/
+
+@media (max-width:576px){
+
+    .header{
+
+        height:75px;
+
+    }
+
+    .logo img{
+
+        width:auto;
+        height:48px;
+
+    }
+
+    .mobile-search-bar{
+
+        top:75px;
+
+    }
+
+}

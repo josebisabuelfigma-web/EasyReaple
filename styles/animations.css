@@ -1,0 +1,130 @@
+/*==========================================================
+    ANIMACIONES DE APARICIÓN AL HACER SCROLL
+
+    Solo se ocultan los elementos .reveal cuando JavaScript
+    ya se ejecutó (clase .js-ready en <html>). Así, si JS
+    falla, el contenido sigue siendo visible.
+==========================================================*/
+
+.js-ready .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity .6s ease, transform .6s ease;
+}
+
+.js-ready .reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+/*==========================================================
+    ENTRADA DEL HERO
+==========================================================*/
+
+@keyframes fadeInUp {
+
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}
+
+.hero-content {
+    animation: fadeInUp .9s ease both;
+}
+
+
+/*==========================================================
+    PANTALLA DE CARGA (LOADER)
+==========================================================*/
+
+.page-loader {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 22px;
+    background: var(--background-color);
+    transition: opacity .5s ease, visibility .5s ease;
+}
+
+.page-loader.loaded {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.loader-logo {
+    width: 90px;
+    animation: pulseLogo 1.4s ease-in-out infinite;
+}
+
+.loader-bar {
+    width: 160px;
+    height: 4px;
+    background: rgba(255, 255, 255, .1);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.loader-bar span {
+    display: block;
+    width: 40%;
+    height: 100%;
+    background: var(--color-primary);
+    border-radius: 10px;
+    animation: loaderMove 1.2s ease-in-out infinite;
+}
+
+@keyframes pulseLogo {
+
+    0%, 100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.08);
+    }
+
+}
+
+@keyframes loaderMove {
+
+    0% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(350%);
+    }
+
+}
+
+
+/*==========================================================
+    PULSO DEL BOTÓN FLOTANTE DE WHATSAPP
+==========================================================*/
+
+@keyframes whatsappPulse {
+
+    0% {
+        transform: scale(1);
+        opacity: .6;
+    }
+
+    100% {
+        transform: scale(1.6);
+        opacity: 0;
+    }
+
+}

@@ -1,0 +1,61 @@
+/*==========================================================
+    ESTILOS NUEVOS DEL SITIO DINÁMICO
+==========================================================*/
+
+/* Productos agotados: se ven, pero sin botón de cotizar */
+.product-card.sold-out .product-thumb img {
+    filter: grayscale(.85);
+    opacity: .7;
+}
+
+.product-badge.badge-soldout {
+    background: #FF453A;
+    color: #fff;
+}
+
+.product-soldout {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: .85rem;
+    font-weight: 600;
+    color: var(--color-gray);
+    padding: 8px 14px;
+    border: 1px dashed rgba(255, 255, 255, .25);
+    border-radius: 50px;
+}
+
+/* Galería con fotos reales */
+.gallery-item.has-image img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Redes: ícono con enlace, mismo tamaño en todas */
+.contact-social a,
+.footer-social a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Foto del bloque «Nosotros» sin recortes raros */
+.about-image img {
+    width: 100%;
+    height: auto;
+}
+
+/* Fondo del carrusel cuando no hay testimonios cargados */
+.products-empty[hidden] {
+    display: none;
+}
+
+/* En móvil, el botón flotante no tapa el contenido del pie */
+@media (max-width: 576px) {
+    footer {
+        padding-bottom: 70px;
+    }
+}
