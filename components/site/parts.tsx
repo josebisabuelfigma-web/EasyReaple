@@ -20,20 +20,17 @@ const SOCIALS = [
   { key: "x_url", icon: "fa-brands fa-x-twitter", label: "X" },
 ];
 
+// Solo muestra las redes que tengan enlace en el panel; si no hay ninguna, no dibuja nada.
 export function SocialLinks({ s, className }: { s: SiteSettings; className: string }) {
+  const links = SOCIALS.map((n) => ({ ...n, href: safeUrl(s[n.key]) })).filter((n) => n.href);
+  if (links.length === 0) return null;
   return (
     <div className={className}>
-      {SOCIALS.map((n) => {
-        const href = safeUrl(s[n.key]);
-        return href ? (
-          <a key={n.key} href={href} target="_blank" rel="noopener noreferrer" aria-label={`${n.label} de EasyReaple`}>
-            <i className={n.icon}></i>
-          </a>
-        ) : null;
-      })}
-      <a href={whatsappLink(s.whatsapp_number)} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp de EasyReaple">
-        <i className="fa-brands fa-whatsapp"></i>
-      </a>
+      {links.map((n) => (
+        <a key={n.key} href={n.href} target="_blank" rel="noopener noreferrer" aria-label={`${n.label} de EasyReaple`}>
+          <i className={n.icon}></i>
+        </a>
+      ))}
     </div>
   );
 }

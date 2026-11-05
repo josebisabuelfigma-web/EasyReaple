@@ -1,4 +1,4 @@
-# EasyReaple Web
+﻿# EasyReaple Web
 
 # 🔑 ¿OLVIDASTE LA CONTRASEÑA DEL PANEL?
 
@@ -21,7 +21,7 @@
 > **Tras 5 intentos fallidos la cuenta se bloquea 15 minutos.**
 
 Sitio de EasyReaple (servicio técnico Apple y Android, Neiva) con panel de administración.
-Next.js 14 + Supabase + Vercel. Todo el contenido (productos, categorías, galería, textos,
+Next.js 14 + Supabase + Netlify. Todo el contenido (productos, categorías, galería, textos,
 WhatsApp y redes) se edita desde `/admin`, sin tocar código.
 
 ## Puesta en marcha
@@ -33,7 +33,7 @@ WhatsApp y redes) se edita desde `/admin`, sin tocar código.
 2. **Brevo** (correo para recuperar la contraseña): cuenta gratis con el correo del proyecto,
    verifica ese correo como remitente y genera una SMTP key (SMTP & API → SMTP).
 3. **Variables de entorno**: copia `.env.example` a `.env.local` y complétalo
-   (en Vercel se cargan en Settings → Environment Variables).
+   (en Netlify se cargan en Site configuration → Environment Variables).
 4. **Local**: `npm install` y `npm run dev` → http://localhost:3000
 5. **Migrar el contenido del sitio anterior** (una sola vez):
    `node --env-file=.env.local scripts/seed.mjs`
@@ -66,3 +66,4 @@ convierten a WebP automáticamente al subirlas.
 - Un producto agotado se ve con la etiqueta *Agotado* y sin botón de cotizar.
 - Copia de seguridad: el plan gratis de Supabase no hace copias automáticas; exporta las tablas
   manualmente (Table Editor → Export) de vez en cuando.
+

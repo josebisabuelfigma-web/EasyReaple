@@ -18,13 +18,12 @@ export default async function HomePage() {
   const phone = s.whatsapp_number.replace(/\D/g, "");
   const categoryNames = Object.fromEntries(data.categories.map((c) => [c.id, c.name]));
   const featuredServices = data.repairServices.slice(0, 6);
-  const popular = data.products.filter((p) => p.featured).slice(0, 8);
+  const popular = data.products.filter((p) => p.featured).slice(0, 12);
 
   return (
     <>
       {/* PORTADA */}
       <section className="hero" id="inicio">
-        <div id="particles-js"></div>
         <div className="container hero-container">
           <div className="hero-content">
             <h1>

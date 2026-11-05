@@ -46,7 +46,7 @@ export const SETTING_GROUPS: SettingGroup[] = [
   {
     id: "redes",
     title: "Redes sociales",
-    description: "Escribe el enlace completo (https://...). Solo se muestran las redes que tengan enlace. WhatsApp siempre aparece.",
+    description: "Escribe el enlace completo (https://...). Solo se muestran las redes que tengan enlace.",
     fields: [
       { key: "instagram_url", label: "Instagram", type: "text", placeholder: "https://instagram.com/tu_usuario" },
       { key: "facebook_url", label: "Facebook", type: "text", placeholder: "https://facebook.com/tu_pagina" },

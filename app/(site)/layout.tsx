@@ -39,6 +39,8 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
       <JsonLd data={localBusinessJsonLd(s, data)} />
       <JsonLd data={websiteJsonLd()} />
 
+      <div id="particles-js" aria-hidden="true"></div>
+
       <div className="page-loader" id="pageLoader">
         <img src="/logo.png" alt="EasyReaple" className="loader-logo" />
         <div className="loader-bar">

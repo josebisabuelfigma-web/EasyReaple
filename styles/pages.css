@@ -1,4 +1,4 @@
-/*==========================================================
+﻿/*==========================================================
     PÁGINAS INTERNAS (Servicios, Tienda, Nosotros)
     Usa los mismos colores y estilos del resto del sitio.
 ==========================================================*/
@@ -299,3 +299,147 @@
         width: 100%;
     }
 }
+
+
+/*==========================================================
+    FONDO ANIMADO EN TODO EL SITIO (líneas que se unen)
+    El lienzo va fijo detrás del contenido; las secciones son
+    semitransparentes para que se vea en los espacios vacíos.
+==========================================================*/
+
+#particles-js {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+main,
+footer {
+    position: relative;
+    z-index: 1;
+}
+
+.hero,
+.page-hero,
+.services,
+.repair-section,
+.equipment,
+.about,
+.gallery,
+.testimonials,
+.contact,
+.cta-band {
+    background:
+        radial-gradient(circle at top right, rgba(10, 132, 255, .08), transparent 40%),
+        radial-gradient(circle at bottom left, rgba(244, 197, 66, .04), transparent 45%),
+        rgba(5, 13, 26, .38);
+}
+
+.products {
+    background: rgba(14, 30, 53, .5);
+}
+
+footer {
+    background: rgba(3, 8, 17, .8);
+}
+
+
+/*==========================================================
+    MENÚ LATERAL MÓVIL: fondo sólido (no se transparenta el contenido)
+==========================================================*/
+
+@media (max-width: 992px) {
+    .navbar {
+        background: #050D1A;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+    }
+}
+
+
+/*==========================================================
+    CELULAR: TODAS LAS TARJETAS DE 2 EN 2
+==========================================================*/
+
+@media (max-width: 768px) {
+    .services-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+    }
+
+    .service-card {
+        padding: 24px 14px;
+        border-radius: 16px;
+    }
+
+    .service-card:hover {
+        transform: none;
+    }
+
+    .service-card i {
+        font-size: 34px;
+        margin-bottom: 12px;
+    }
+
+    .service-card h3 {
+        font-size: 1rem;
+        margin-bottom: 8px;
+    }
+
+    .service-card p {
+        font-size: .8rem;
+        line-height: 1.55;
+    }
+
+    .equipment-card {
+        border-radius: 16px;
+    }
+
+    .equipment-card:hover {
+        transform: none;
+    }
+
+    .equipment-thumb {
+        padding: 10px;
+    }
+
+    .equipment-body {
+        padding: 14px 12px;
+    }
+
+    .equipment-body h3 {
+        font-size: .95rem;
+        margin-bottom: 6px;
+    }
+
+    .equipment-body p {
+        font-size: .78rem;
+        line-height: 1.5;
+    }
+
+    .services .section-description,
+    .equipment .section-description,
+    .repair-section .section-description {
+        margin-bottom: 30px;
+    }
+}
+
+@media (max-width: 576px) {
+    .contact-info-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+    }
+
+    .contact-info-item {
+        padding: 18px 12px;
+    }
+
+    .contact-info-item p {
+        font-size: .8rem;
+        overflow-wrap: anywhere;
+    }
+}
+
