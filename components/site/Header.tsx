@@ -1,20 +1,17 @@
 "use client";
 
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useSearch } from "./SearchContext";
+import { SITE_PAGES } from "@/lib/pages";
 
-const LINKS = [
-  { href: "#inicio", label: "Inicio" },
-  { href: "#servicios", label: "Servicios" },
-  { href: "#catalogo", label: "Catálogo" },
-  { href: "#galeria", label: "Galería" },
-  { href: "#sobremi", label: "Nosotros" },
-  { href: "#tecnologia", label: "Tecnología" },
-  { href: "#contacto", label: "Contacto" },
-];
+const LINKS = SITE_PAGES.filter((p) => p.menu);
 
 export default function Header({ whatsappHref }: { whatsappHref: string }) {
   const { search, setSearch } = useSearch();
+  const pathname = usePathname();
+  const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -25,6 +22,12 @@ export default function Header({ whatsappHref }: { whatsappHref: string }) {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Al cambiar de página se cierran el menú y el buscador.
+  useEffect(() => {
+    setMenuOpen(false);
+    setSearchOpen(false);
+  }, [pathname]);
 
   useEffect(() => {
     document.body.classList.toggle("menu-open", menuOpen);
@@ -42,22 +45,22 @@ export default function Header({ whatsappHref }: { whatsappHref: string }) {
     return () => document.removeEventListener("keydown", onKey);
   }, []);
 
-  function goToCatalog() {
+  // El buscador busca productos: al enviarlo se abre la Tienda con el texto.
+  function submit() {
     setMenuOpen(false);
     setSearchOpen(false);
-    document.getElementById("catalogo")?.scrollIntoView({ behavior: "smooth" });
+    if (search.trim() && pathname !== "/tienda") router.push("/tienda");
+    else if (search.trim()) document.getElementById("catalogo")?.scrollIntoView({ behavior: "smooth" });
   }
 
-  function submit() {
-    if (search.trim()) goToCatalog();
-  }
+  const isActive = (path: string) => (path === "/" ? pathname === "/" : pathname.startsWith(path));
 
   const searchBox = (
     <div className="search-box">
       <input
         type="text"
         className="search-input"
-        placeholder="Buscar..."
+        placeholder="Buscar productos..."
         value={search}
         onChange={(e) => setSearch(e.target.value)}
         onKeyDown={(e) => {
@@ -79,17 +82,17 @@ export default function Header({ whatsappHref }: { whatsappHref: string }) {
 
       <header className={`header${scrolled ? " scrolled" : ""}`}>
         <div className="container header-container">
-          <a href="#inicio" className="logo">
+          <Link href="/" className="logo" aria-label="EasyReaple, ir al inicio">
             <img src="/logo.png" alt="Logo EasyReaple" />
-          </a>
+          </Link>
 
-          <nav className={`navbar${menuOpen ? " active" : ""}`}>
+          <nav className={`navbar${menuOpen ? " active" : ""}`} aria-label="Principal">
             <ul className="nav-menu">
               {LINKS.map((l) => (
-                <li key={l.href}>
-                  <a href={l.href} onClick={() => setMenuOpen(false)}>
+                <li key={l.path}>
+                  <Link href={l.path} className={isActive(l.path) ? "active" : ""} aria-current={isActive(l.path) ? "page" : undefined}>
                     {l.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>

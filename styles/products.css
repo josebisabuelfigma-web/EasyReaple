@@ -212,24 +212,24 @@
         font-size: .82rem;
     }
 
-    /* Tarjetas en formato horizontal compacto: ícono a la
-       izquierda, contenido a la derecha, sin descripción. */
+    /* Celular: 2 tarjetas por fila, foto arriba y botón abajo. */
 
     .products-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 12px;
     }
 
     .product-card {
-        flex-direction: row;
-        align-items: stretch;
+        border-radius: 16px;
+    }
+
+    .product-card:hover {
+        transform: none;
     }
 
     .product-thumb {
-        width: 85px;
-        min-width: 85px;
-        height: auto;
-        font-size: 28px;
+        height: 120px;
+        font-size: 38px;
     }
 
     .product-thumb.has-image {
@@ -237,40 +237,52 @@
     }
 
     .product-body {
-        padding: 12px 16px;
-        gap: 3px;
+        padding: 12px;
+        gap: 4px;
     }
 
     .product-category {
-        font-size: .65rem;
+        font-size: .62rem;
+        letter-spacing: .6px;
     }
 
     .product-body h3 {
-        font-size: .92rem;
+        font-size: .88rem;
         line-height: 1.3;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
     }
 
     .product-body p {
-        display: none;
+        font-size: .76rem;
+        line-height: 1.45;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
     }
 
     .product-footer {
         margin-top: 6px;
-        padding-top: 0;
-        border-top: none;
-        justify-content: flex-start;
+        padding-top: 10px;
     }
 
     .product-cta {
-        width: auto;
-        padding: 6px 16px;
+        padding: 8px 10px;
         font-size: .78rem;
+    }
+
+    .product-soldout {
+        padding: 6px 10px;
+        font-size: .74rem;
     }
 
     .product-badge {
         top: 8px;
         right: 8px;
-        font-size: .6rem;
+        font-size: .58rem;
         padding: 3px 9px;
     }
 

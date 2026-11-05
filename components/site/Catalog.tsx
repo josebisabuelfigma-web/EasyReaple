@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { useSearch } from "./SearchContext";
+import ProductCard from "./ProductCard";
 import type { PublicProduct } from "@/lib/siteData";
 
 type Props = {
@@ -69,39 +70,7 @@ export default function Catalog({ categories, brands, products, whatsappNumber }
 
       <div className="products-grid">
         {filtered.map((p) => (
-          <article key={p.id} className={`product-card active${p.sold_out ? " sold-out" : ""}`}>
-            {p.sold_out ? (
-              <span className="product-badge badge-soldout">Agotado</span>
-            ) : (
-              p.badge && <span className="product-badge">{p.badge}</span>
-            )}
-            <div className={`product-thumb${p.image ? " has-image" : ""}`}>
-              {p.image ? <img src={p.image} alt={p.name} loading="lazy" /> : <i className="fa-solid fa-mobile-screen"></i>}
-            </div>
-            <div className="product-body">
-              {p.category_id && categoryNames[p.category_id] && (
-                <span className="product-category">{categoryNames[p.category_id]}</span>
-              )}
-              <h3>{p.name}</h3>
-              <p>{p.description}</p>
-              <div className="product-footer">
-                {p.sold_out ? (
-                  <span className="product-soldout">
-                    <i className="fa-solid fa-ban"></i> Agotado
-                  </span>
-                ) : (
-                  <a
-                    className="product-cta"
-                    href={`https://wa.me/${phone}?text=${encodeURIComponent(`Hola, quiero cotizar: ${p.name}`)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <i className="fa-brands fa-whatsapp"></i> Cotizar
-                  </a>
-                )}
-              </div>
-            </div>
-          </article>
+          <ProductCard key={p.id} product={p} categoryName={p.category_id ? categoryNames[p.category_id] : null} phone={phone} />
         ))}
       </div>
 

@@ -73,9 +73,30 @@ export const SETTING_GROUPS: SettingGroup[] = [
     ],
   },
   {
+    id: "servicios-pagina",
+    title: "Página «Servicios»",
+    description: "Las reparaciones se administran en el menú Servicios.",
+    fields: [
+      { key: "repair_subtitle", label: "Etiqueta pequeña", type: "text" },
+      { key: "repair_title", label: "Título", type: "text" },
+      { key: "repair_description", label: "Descripción", type: "textarea" },
+      { key: "featured_services_title", label: "Título de servicios en el Inicio", type: "text" },
+    ],
+  },
+  {
+    id: "populares",
+    title: "Productos populares (Inicio)",
+    description: "Los productos se marcan como «Popular» en el menú Productos.",
+    fields: [
+      { key: "featured_subtitle", label: "Etiqueta pequeña", type: "text" },
+      { key: "featured_title", label: "Título", type: "text" },
+      { key: "featured_description", label: "Descripción", type: "textarea" },
+    ],
+  },
+  {
     id: "servicios",
     title: "Sección «¿Por qué elegirnos?»",
-    description: "Las tarjetas se administran en el menú Servicios.",
+    description: "Las tarjetas se administran en el menú Ventajas.",
     fields: [
       { key: "services_subtitle", label: "Etiqueta pequeña", type: "text" },
       { key: "services_title", label: "Título", type: "text" },
@@ -153,14 +174,6 @@ export const SETTING_GROUPS: SettingGroup[] = [
       },
     ],
   },
-  {
-    id: "seo",
-    title: "Google y redes (SEO)",
-    fields: [
-      { key: "seo_title", label: "Título de la pestaña y de Google", type: "text" },
-      { key: "seo_description", label: "Descripción para Google", type: "textarea" },
-    ],
-  },
 ];
 
 export type SiteSettings = Record<string, string>;
@@ -188,6 +201,15 @@ export const DEFAULT_SETTINGS: SiteSettings = {
   hero_info_1: "Neiva, Huila",
   hero_info_2: "Recibimos envíos a nivel nacional",
   hero_button_text: "Cotizar ahora",
+
+  repair_subtitle: "NUESTROS SERVICIOS",
+  repair_title: "Reparación de celulares Apple y Android",
+  repair_description:
+    "Diagnóstico honesto, repuestos de calidad y garantía en cada reparación. Escríbenos por WhatsApp y te cotizamos sin compromiso.",
+  featured_services_title: "Lo que más reparamos",
+  featured_subtitle: "LO MÁS BUSCADO",
+  featured_title: "Productos populares",
+  featured_description: "Los repuestos y equipos que más piden nuestros clientes.",
 
   services_subtitle: "¿POR QUÉ ELEGIRNOS?",
   services_title: "Un servicio técnico pensado para darte tranquilidad.",
@@ -230,9 +252,6 @@ export const DEFAULT_SETTINGS: SiteSettings = {
     "Servicio técnico especializado en dispositivos Apple y Android en Neiva, Huila. Reparación, repuestos y venta de equipos con garantía.",
   footer_services: "Reparación Apple\nReparación Android\nVenta de repuestos\nEquipos reacondicionados",
 
-  seo_title: "EasyReaple | Servicio Técnico Especializado Apple y Android",
-  seo_description:
-    "Servicio técnico especializado en dispositivos Apple (iOS) y Android. Venta de equipos, repuestos, accesorios y soporte técnico profesional.",
 };
 
 export const SETTING_KEYS = SETTING_GROUPS.flatMap((g) => g.fields.map((f) => f.key));
@@ -270,6 +289,14 @@ export function safeUrl(value: string) {
 }
 
 export const ICON_OPTIONS = [
+  { value: "fa-solid fa-plug", label: "Puerto / cargador" },
+  { value: "fa-solid fa-unlock-keyhole", label: "Desbloqueo" },
+  { value: "fa-solid fa-laptop", label: "Computador" },
+  { value: "fa-solid fa-tablet-screen-button", label: "Tableta" },
+  { value: "fa-solid fa-camera", label: "Cámara" },
+  { value: "fa-solid fa-droplet", label: "Daño por agua" },
+  { value: "fa-solid fa-volume-high", label: "Audio / parlante" },
+  { value: "fa-solid fa-wifi", label: "Señal / WiFi" },
   { value: "fa-brands fa-apple", label: "Apple" },
   { value: "fa-brands fa-android", label: "Android" },
   { value: "fa-solid fa-microchip", label: "Chip / repuestos" },

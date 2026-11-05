@@ -142,3 +142,8 @@ alter table testimonials enable row level security;
 -- Storage: crea un bucket PÚBLICO llamado "site"
 -- (Storage > New bucket > nombre: site > Public bucket: SÍ).
 -- Guarda las fotos del catálogo, galería y equipos.
+
+-- =====================================================================
+-- Agregado en la migración 002 (si instalas desde cero, esto ya queda incluido)
+-- =====================================================================
+-- Corre también sql/002_servicios_popular.sql después de este script.

@@ -7,8 +7,9 @@ import ImageField from "./ImageField";
 
 type Row = Record<string, any>;
 
-const FOLDERS: Record<string, "products" | "equipment" | "gallery"> = {
+const FOLDERS: Record<string, "products" | "equipment" | "gallery" | "services"> = {
   products: "products",
+  repair_services: "services",
   equipment: "equipment",
   gallery: "gallery",
 };
@@ -39,6 +40,8 @@ export default function ResourceManager({ resource }: { resource: string }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
+  // Aviso flotante para borrar: no tapa la pantalla, se puede ignorar o cerrar.
+  const [pendingDelete, setPendingDelete] = useState<{ row: Row; count: number } | null>(null);
   const [filter, setFilter] = useState("");
   const [editing, setEditing] = useState<{ id: string | null; form: Row } | null>(null);
   const [saving, setSaving] = useState(false);
@@ -75,7 +78,7 @@ export default function ResourceManager({ resource }: { resource: string }) {
 
   function flash(msg: string) {
     setNotice(msg);
-    setTimeout(() => setNotice(""), 3500);
+    setTimeout(() => setNotice(""), 6000);
   }
 
   async function save() {
@@ -107,7 +110,7 @@ export default function ResourceManager({ resource }: { resource: string }) {
     }
   }
 
-  async function quickToggle(row: Row, key: "sold_out" | "active") {
+  async function quickToggle(row: Row, key: "sold_out" | "active" | "featured") {
     try {
       await api(`/api/admin/r/${resource}/${row.id}`, {
         method: "PUT",
@@ -121,13 +124,27 @@ export default function ResourceManager({ resource }: { resource: string }) {
     }
   }
 
-  async function remove(row: Row) {
-    const name = row[cfg.titleKey];
-    if (!confirm(`¿Borrar ${cfg.singular} «${name}»? Esta acción no se puede deshacer.`)) return;
+  async function askRemove(row: Row) {
+    setError("");
+    let count = 0;
+    if (cfg.usedBy) {
+      try {
+        count = (await api(`/api/admin/r/${resource}/${row.id}/usage`)).count;
+      } catch {
+        // si no se pudo contar, igual se deja borrar
+      }
+    }
+    setPendingDelete({ row, count });
+  }
+
+  async function confirmRemove() {
+    if (!pendingDelete) return;
+    const { row, count } = pendingDelete;
+    setPendingDelete(null);
     try {
       await api(`/api/admin/r/${resource}/${row.id}`, { method: "DELETE" });
       setItems((prev) => prev.filter((r) => r.id !== row.id));
-      flash("Borrado.");
+      flash(count > 0 ? `Borrado. Los ${count} ${cfg.usedBy!.label} ${cfg.usedBy!.after}.` : "Borrado.");
     } catch (e: any) {
       setError(e.message);
     }
@@ -196,6 +213,7 @@ export default function ResourceManager({ resource }: { resource: string }) {
   }
 
   const hasSoldOut = cfg.fields.some((f) => f.key === "sold_out");
+  const hasFeatured = cfg.fields.some((f) => f.key === "featured");
 
   return (
     <>
@@ -209,8 +227,35 @@ export default function ResourceManager({ resource }: { resource: string }) {
         </button>
       </div>
 
-      {notice && <div className="a-msg ok">{notice}</div>}
       {error && <div className="a-msg error">{error}</div>}
+
+      <div className="a-toasts" aria-live="polite">
+        {notice && (
+          <div className="a-toast ok">
+            <i className="fa-solid fa-circle-check"></i>
+            <span>{notice}</span>
+          </div>
+        )}
+        {pendingDelete && (
+          <div className={`a-toast ${pendingDelete.count > 0 ? "warn" : "ask"}`} role="alert">
+            <i className={`fa-solid ${pendingDelete.count > 0 ? "fa-triangle-exclamation" : "fa-trash"}`}></i>
+            <span>
+              {pendingDelete.count > 0 ? (
+                <>
+                  <strong>«{pendingDelete.row[cfg.titleKey]}»</strong> tiene{" "}
+                  <strong>{pendingDelete.count} {cfg.usedBy!.label}</strong>. Si la borras, {cfg.usedBy!.after}.
+                </>
+              ) : (
+                <>¿Borrar {cfg.singular} <strong>«{pendingDelete.row[cfg.titleKey]}»</strong>? No se puede deshacer.</>
+              )}
+            </span>
+            <div className="a-toast-actions">
+              <button className="a-btn small" onClick={() => setPendingDelete(null)}>Cancelar</button>
+              <button className="a-btn small danger" onClick={confirmRemove}>Borrar</button>
+            </div>
+          </div>
+        )}
+      </div>
 
       <div className="a-card">
         {items.length > 6 && (
@@ -237,6 +282,7 @@ export default function ResourceManager({ resource }: { resource: string }) {
                     {row[cfg.titleKey]}
                     {!row.active && <span className="a-chip">Oculto</span>}
                     {row.sold_out && <span className="a-chip danger">Agotado</span>}
+                    {row.featured && <span className="a-chip warn"><i className="fa-solid fa-star"></i> Popular</span>}
                     {row.badge && <span className="a-chip warn">{row.badge}</span>}
                     {cfg.fields.filter((f) => f.type === "relation").map((f) => {
                       const n = relationName(f, row[f.key]);
@@ -246,6 +292,11 @@ export default function ResourceManager({ resource }: { resource: string }) {
                   {cfg.subtitleKey && <div className="a-row-sub">{row[cfg.subtitleKey]}</div>}
                 </div>
                 <div className="a-row-actions">
+                  {hasFeatured && (
+                    <button className="a-btn small" onClick={() => quickToggle(row, "featured")}>
+                      {row.featured ? "Quitar popular" : "Marcar popular"}
+                    </button>
+                  )}
                   {hasSoldOut && (
                     <button className="a-btn small" onClick={() => quickToggle(row, "sold_out")}>
                       {row.sold_out ? "Marcar disponible" : "Marcar agotado"}
@@ -257,13 +308,12 @@ export default function ResourceManager({ resource }: { resource: string }) {
                   <button className="a-btn small" onClick={() => { setFormError(""); setEditing({ id: row.id, form: { ...emptyForm(cfg), ...row, sort_order: row.sort_order } }); }}>
                     Editar
                   </button>
-                  <button className="a-btn small danger" onClick={() => remove(row)}>Borrar</button>
+                  <button className="a-btn small danger" onClick={() => askRemove(row)}>Borrar</button>
                 </div>
               </div>
             ))}
           </div>
         )}
-        {cfg.deleteHint && <p className="a-help" style={{ marginTop: 14, color: "var(--a-muted)", fontSize: ".78rem" }}>{cfg.deleteHint}</p>}
       </div>
 
       {editing && (

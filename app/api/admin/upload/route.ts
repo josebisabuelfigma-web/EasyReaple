@@ -10,7 +10,7 @@ export const maxDuration = 30;
 
 const MAX_BYTES = 8 * 1024 * 1024;
 const ALLOWED = new Set(["image/jpeg", "image/png", "image/webp"]);
-const FOLDERS = new Set(["products", "equipment", "gallery", "about"]);
+const FOLDERS = new Set(["products", "equipment", "gallery", "about", "services"]);
 
 // Recibe una foto, la reduce (máx. 1400 px) y la convierte a WebP para que el
 // sitio cargue rápido y el almacenamiento rinda. Devuelve la ruta guardada.

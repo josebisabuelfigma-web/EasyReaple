@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { getSupabasePublic, publicImageUrl } from "@/lib/supabaseAdmin";
 import { mergeSettings, type SiteSettings } from "@/lib/settings";
 
@@ -10,6 +11,7 @@ export type PublicProduct = {
   image: string | null;
   badge: string | null;
   sold_out: boolean;
+  featured: boolean;
 };
 
 export type SiteData = {
@@ -18,6 +20,7 @@ export type SiteData = {
   brands: { id: string; name: string }[];
   products: PublicProduct[];
   services: { id: string; icon: string; title: string; text: string }[];
+  repairServices: { id: string; icon: string; title: string; text: string; image: string | null }[];
   equipment: { id: string; title: string; text: string; image: string | null }[];
   gallery: { id: string; title: string; caption: string; image: string | null }[];
   testimonials: { id: string; name: string; city: string; rating: number; text: string }[];
@@ -25,13 +28,16 @@ export type SiteData = {
 
 type ListResult = { data: any[] | null; error: { message: string } | null };
 
-export async function getSiteData(): Promise<SiteData> {
+// cache(): el Inicio, el menú y el pie de página piden los datos en la misma
+// visita y así se leen de Supabase una sola vez.
+export const getSiteData = cache(async (): Promise<SiteData> => {
   const empty: SiteData = {
     settings: mergeSettings(null),
     categories: [],
     brands: [],
     products: [],
     services: [],
+    repairServices: [],
     equipment: [],
     gallery: [],
     testimonials: [],
@@ -54,18 +60,19 @@ export async function getSiteData(): Promise<SiteData> {
         .order("created_at", { ascending: true }) as unknown as PromiseLike<ListResult>
     );
 
-  const [settings, categories, brands, products, services, equipment, gallery, testimonials] = await Promise.all([
+  const [settings, categories, brands, products, services, repairServices, equipment, gallery, testimonials] = await Promise.all([
     db.from("site_settings").select("data").eq("id", 1).maybeSingle(),
     list("categories", "id, name"),
     list("brands", "id, name"),
-    list("products", "id, name, description, category_id, brand_id, image_path, badge, sold_out"),
+    list("products", "id, name, description, category_id, brand_id, image_path, badge, sold_out, featured"),
     list("services", "id, icon, title, text"),
+    list("repair_services", "id, icon, title, text, image_path"),
     list("equipment", "id, title, text, image_path"),
     list("gallery_items", "id, title, caption, image_path"),
     list("testimonials", "id, name, city, rating, text"),
   ]);
 
-  const failed = [settings, categories, brands, products, services, equipment, gallery, testimonials].find(
+  const failed = [settings, categories, brands, products, services, repairServices, equipment, gallery, testimonials].find(
     (r) => r.error
   );
   if (failed?.error) throw new Error(`No se pudo leer el contenido del sitio: ${failed.error.message}`);
@@ -83,8 +90,16 @@ export async function getSiteData(): Promise<SiteData> {
       image: publicImageUrl(p.image_path),
       badge: p.badge,
       sold_out: p.sold_out,
+      featured: !!p.featured,
     })),
     services: services.data || [],
+    repairServices: (repairServices.data || []).map((r) => ({
+      id: r.id,
+      icon: r.icon,
+      title: r.title,
+      text: r.text,
+      image: publicImageUrl(r.image_path),
+    })),
     equipment: (equipment.data || []).map((e) => ({
       id: e.id,
       title: e.title,
@@ -99,4 +114,4 @@ export async function getSiteData(): Promise<SiteData> {
     })),
     testimonials: testimonials.data || [],
   };
-}
+});

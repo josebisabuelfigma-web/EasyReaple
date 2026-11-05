@@ -22,7 +22,7 @@ async function shrink(file: File): Promise<File> {
 
 type Props = {
   value: string | null;
-  folder: "products" | "equipment" | "gallery" | "about";
+  folder: "products" | "equipment" | "gallery" | "about" | "services";
   onChange: (path: string | null) => void;
 };
 

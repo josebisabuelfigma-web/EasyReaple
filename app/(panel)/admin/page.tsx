@@ -11,16 +11,20 @@ async function count(table: string, filter?: (q: any) => any) {
 }
 
 export default async function AdminHome() {
-  const [products, soldOut, categories, gallery, testimonials] = await Promise.all([
+  const [products, soldOut, categories, gallery, testimonials, repairs, popular] = await Promise.all([
     count("products"),
     count("products", (q) => q.eq("sold_out", true)),
     count("categories"),
     count("gallery_items"),
     count("testimonials"),
+    count("repair_services"),
+    count("products", (q) => q.eq("featured", true)),
   ]);
 
   const stats = [
+    { href: "/admin/servicios", icon: "fa-solid fa-screwdriver-wrench", value: repairs, label: "Servicios" },
     { href: "/admin/productos", icon: "fa-solid fa-box-open", value: products, label: "Productos" },
+    { href: "/admin/productos", icon: "fa-solid fa-star", value: popular, label: "Populares (Inicio)" },
     { href: "/admin/productos", icon: "fa-solid fa-ban", value: soldOut, label: "Agotados" },
     { href: "/admin/categorias", icon: "fa-solid fa-tags", value: categories, label: "Categorías" },
     { href: "/admin/galeria", icon: "fa-solid fa-images", value: gallery, label: "Fotos en galería" },
@@ -50,6 +54,7 @@ export default async function AdminHome() {
         <h2>Atajos</h2>
         <p className="a-sub">Lo que más se usa.</p>
         <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+          <Link className="a-btn primary" href="/admin/servicios">Gestionar servicios</Link>
           <Link className="a-btn primary" href="/admin/productos">Gestionar productos</Link>
           <Link className="a-btn" href="/admin/ajustes">Cambiar WhatsApp, horario y redes</Link>
           <Link className="a-btn" href="/admin/cuenta">Cambiar mi contraseña</Link>

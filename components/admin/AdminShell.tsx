@@ -6,12 +6,13 @@ import { useEffect, useState } from "react";
 
 const NAV = [
   { href: "/admin", label: "Resumen", icon: "fa-solid fa-gauge" },
+  { href: "/admin/servicios", label: "Servicios", icon: "fa-solid fa-screwdriver-wrench" },
   { href: "/admin/productos", label: "Productos", icon: "fa-solid fa-box-open" },
   { href: "/admin/categorias", label: "Categorías", icon: "fa-solid fa-tags" },
   { href: "/admin/marcas", label: "Marcas", icon: "fa-solid fa-copyright" },
   { href: "/admin/galeria", label: "Galería", icon: "fa-solid fa-images" },
   { href: "/admin/testimonios", label: "Testimonios", icon: "fa-solid fa-comment-dots" },
-  { href: "/admin/servicios", label: "Servicios", icon: "fa-solid fa-shield-halved" },
+  { href: "/admin/ventajas", label: "Ventajas", icon: "fa-solid fa-shield-halved" },
   { href: "/admin/equipos", label: "Equipos", icon: "fa-solid fa-microscope" },
   { href: "/admin/ajustes", label: "Textos, contacto y redes", icon: "fa-solid fa-sliders" },
   { href: "/admin/cuenta", label: "Mi cuenta", icon: "fa-solid fa-user-gear" },

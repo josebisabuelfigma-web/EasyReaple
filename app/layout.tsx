@@ -2,8 +2,11 @@ import type { Metadata, Viewport } from "next";
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"),
-  title: "EasyReaple",
-  icons: { icon: "/logo.png" },
+  title: { default: "EasyReaple | Servicio técnico de celulares en Neiva", template: "%s" },
+  applicationName: "EasyReaple",
+  authors: [{ name: "EasyReaple" }],
+  icons: { icon: "/logo.png", apple: "/logo.png" },
+  formatDetection: { telephone: true },
 };
 
 export const viewport: Viewport = {

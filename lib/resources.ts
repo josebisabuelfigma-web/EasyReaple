@@ -27,8 +27,8 @@ export type ResourceConfig = {
   subtitleKey?: string;
   imageKey?: string;
   fields: ResourceField[];
-  // Si borrar una fila debe avisar de que hay datos que dependen de ella.
-  deleteHint?: string;
+  // Tabla/columna que referencia esta fila (para avisar al borrar: "tiene N productos").
+  usedBy?: { table: string; column: string; label: string; after: string };
 };
 
 const activeField: ResourceField = {
@@ -66,7 +66,13 @@ export const RESOURCES: Record<string, ResourceConfig> = {
         relation: "brands",
         emptyLabel: "Compatible con todas las marcas",
       },
-      { key: "badge", label: "Etiqueta (opcional)", type: "text", max: 20, help: "Ej: Popular, Nuevo, Oferta." },
+      {
+        key: "featured",
+        label: "Popular (se muestra en el Inicio)",
+        type: "checkbox",
+        help: "Marca los productos que quieres destacar en la página de inicio.",
+      },
+      { key: "badge", label: "Etiqueta (opcional)", type: "text", max: 20, help: "Ej: Nuevo, Oferta. «Popular» ya se pone solo al marcarlo arriba." },
       { key: "sold_out", label: "Agotado", type: "checkbox" },
       orderField,
       activeField,
@@ -79,7 +85,7 @@ export const RESOURCES: Record<string, ResourceConfig> = {
     intro: "Los botones de filtro del catálogo (Pantallas, Baterías...).",
     titleKey: "name",
     fields: [{ key: "name", label: "Nombre", type: "text", required: true, max: 60 }, orderField, activeField],
-    deleteHint: "No se puede borrar una categoría que tenga productos: muévelos antes o desmarca «Visible».",
+    usedBy: { table: "products", column: "category_id", label: "productos", after: "quedarán sin categoría" },
   },
   brands: {
     table: "brands",
@@ -88,13 +94,30 @@ export const RESOURCES: Record<string, ResourceConfig> = {
     intro: "Filtro por marca del catálogo (Apple, Android...).",
     titleKey: "name",
     fields: [{ key: "name", label: "Nombre", type: "text", required: true, max: 60 }, orderField, activeField],
-    deleteHint: "No se puede borrar una marca que tenga productos: muévelos antes o desmarca «Visible».",
+    usedBy: { table: "products", column: "brand_id", label: "productos", after: "quedarán compatibles con todas las marcas" },
+  },
+  repair_services: {
+    table: "repair_services",
+    title: "Servicios",
+    singular: "servicio",
+    intro: "Las reparaciones que ofreces (página «Servicios»). Los primeros salen también en el Inicio.",
+    titleKey: "title",
+    subtitleKey: "text",
+    imageKey: "image_path",
+    fields: [
+      { key: "title", label: "Nombre del servicio", type: "text", required: true, max: 80, help: "Ej: Cambio de pantalla" },
+      { key: "text", label: "Descripción", type: "textarea", max: 400 },
+      { key: "image_path", label: "Foto (opcional)", type: "image", help: "Si no hay foto, se muestra el ícono." },
+      { key: "icon", label: "Ícono", type: "select", options: ICON_OPTIONS },
+      orderField,
+      activeField,
+    ],
   },
   services: {
     table: "services",
-    title: "Servicios",
-    singular: "servicio",
-    intro: "Tarjetas de «¿Por qué elegirnos?».",
+    title: "Ventajas",
+    singular: "ventaja",
+    intro: "Tarjetas de «¿Por qué elegirnos?» (garantía, repuestos, envíos...).",
     titleKey: "title",
     subtitleKey: "text",
     fields: [
@@ -165,7 +188,8 @@ export const RESOURCE_SLUGS: Record<string, string> = {
   productos: "products",
   categorias: "categories",
   marcas: "brands",
-  servicios: "services",
+  servicios: "repair_services",
+  ventajas: "services",
   equipos: "equipment",
   galeria: "gallery",
   testimonios: "testimonials",
