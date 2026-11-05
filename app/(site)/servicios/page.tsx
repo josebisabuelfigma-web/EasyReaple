@@ -3,7 +3,7 @@ import Link from "next/link";
 import { getSiteData } from "@/lib/siteData";
 import { whatsappLink } from "@/lib/settings";
 import { breadcrumbJsonLd, pageMetadata, servicesJsonLd } from "@/lib/seo";
-import { JsonLd, PageHero, RepairCard } from "@/components/site/parts";
+import { JsonLd, PageHero, RepairCard, SectionHead } from "@/components/site/parts";
 
 export const revalidate = 3600;
 
@@ -33,6 +33,26 @@ export default async function ServiciosPage() {
           )}
         </div>
       </section>
+
+      {/* EQUIPOS QUE USAMOS */}
+      {data.equipment.length > 0 && (
+        <section className="equipment" id="tecnologia">
+          <div className="container">
+            <SectionHead subtitle={s.equipment_subtitle} title={s.equipment_title} description={s.equipment_description} />
+            <div className="services-grid">
+              {data.equipment.map((e) => (
+                <article className="equipment-card reveal" key={e.id}>
+                  <div className="equipment-thumb">{e.image && <img src={e.image} alt={e.title} loading="lazy" />}</div>
+                  <div className="equipment-body">
+                    <h3>{e.title}</h3>
+                    <p>{e.text}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       <section className="cta-band">
         <div className="container">

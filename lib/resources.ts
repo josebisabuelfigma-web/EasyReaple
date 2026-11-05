@@ -132,7 +132,7 @@ export const RESOURCES: Record<string, ResourceConfig> = {
     table: "equipment",
     title: "Equipos",
     singular: "equipo",
-    intro: "Tarjetas de «Nuestra tecnología».",
+    intro: "Los equipos y herramientas que usas (se ven en la página «Servicios»).",
     titleKey: "title",
     subtitleKey: "text",
     imageKey: "image_path",

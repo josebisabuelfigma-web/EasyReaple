@@ -21,12 +21,38 @@
     line-height: 1.2;
 }
 
+.page-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 26px;
+}
+
+.back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 18px;
+    border-radius: 50px;
+    background: rgba(255, 255, 255, .06);
+    border: 1px solid rgba(255, 255, 255, .15);
+    color: var(--color-white);
+    font-size: .88rem;
+    font-weight: 600;
+    transition: var(--transition-fast);
+}
+
+.back-btn:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
 .breadcrumb {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-end;
     gap: 10px;
-    margin-bottom: 18px;
     font-size: .82rem;
     color: var(--color-gray);
 }

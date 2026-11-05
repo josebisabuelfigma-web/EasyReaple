@@ -121,7 +121,7 @@ export const SETTING_GROUPS: SettingGroup[] = [
   },
   {
     id: "tecnologia",
-    title: "Sección «Nuestra tecnología»",
+    title: "Servicios: sección «Nuestra tecnología»",
     description: "Las tarjetas se administran en el menú Equipos.",
     fields: [
       { key: "equipment_subtitle", label: "Etiqueta pequeña", type: "text" },

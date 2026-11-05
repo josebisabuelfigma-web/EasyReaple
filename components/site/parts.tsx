@@ -1,5 +1,6 @@
 // Piezas visuales compartidas por las páginas del sitio (sin estado).
 import Link from "next/link";
+import BackButton from "./BackButton";
 import { safeUrl, whatsappLink, type SiteSettings } from "@/lib/settings";
 
 // Convierte **texto** en negrita; el resto se muestra tal cual.
@@ -62,11 +63,14 @@ export function PageHero({
   return (
     <section className="page-hero">
       <div className="container">
-        <nav className="breadcrumb" aria-label="Ruta">
-          <Link href="/">Inicio</Link>
-          <i className="fa-solid fa-chevron-right"></i>
-          <span aria-current="page">{crumb}</span>
-        </nav>
+        <div className="page-nav">
+          <BackButton />
+          <nav className="breadcrumb" aria-label="Ruta">
+            <Link href="/">Inicio</Link>
+            <i className="fa-solid fa-chevron-right"></i>
+            <span aria-current="page">{crumb}</span>
+          </nav>
+        </div>
         {subtitle && <span className="section-subtitle">{subtitle}</span>}
         <h1 className="page-title">{title}</h1>
         {description && <p className="section-description">{description}</p>}
