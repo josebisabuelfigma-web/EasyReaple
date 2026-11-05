@@ -1,4 +1,4 @@
-﻿# EasyReaple Web
+# EasyReaple Web
 
 # 🔑 ¿OLVIDASTE LA CONTRASEÑA DEL PANEL?
 
