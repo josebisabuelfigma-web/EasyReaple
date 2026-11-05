@@ -1,5 +1,25 @@
 # EasyReaple Web
 
+# 🔑 ¿OLVIDASTE LA CONTRASEÑA DEL PANEL?
+
+> ## ⚠️ Hay dos formas de recuperarla
+>
+> ## 1️⃣ Con el correo (la normal)
+> 1. Entra a **`/olvide-clave`** (en el login: «¿Olvidaste tu contraseña?»).
+> 2. Escribe tu **usuario** o tu **correo** registrado.
+> 3. Te llega un enlace por correo, **válido 60 minutos y de un solo uso**.
+> 4. Elige la contraseña nueva (mínimo 8 caracteres). Se cierran todas las sesiones abiertas.
+>
+> Necesita que **Brevo** esté configurado en `.env.local` / Vercel (`SMTP_*` y `MAIL_FROM_*`) y que el usuario tenga un correo guardado.
+>
+> ## 2️⃣ Sin correo (de emergencia, desde tu computador)
+> ```
+> node --env-file=.env.local scripts/create-admin.mjs
+> ```
+> Escribe el **mismo usuario** y una contraseña nueva: reemplaza la clave y desbloquea la cuenta. Solo el hash llega a la base de datos.
+>
+> **Tras 5 intentos fallidos la cuenta se bloquea 15 minutos.**
+
 Sitio de EasyReaple (servicio técnico Apple y Android, Neiva) con panel de administración.
 Next.js 14 + Supabase + Vercel. Todo el contenido (productos, categorías, galería, textos,
 WhatsApp y redes) se edita desde `/admin`, sin tocar código.
